@@ -19,6 +19,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
+        ref: UserService~
         fetch-depth: 0
 
     - name: Set up JDK 21
