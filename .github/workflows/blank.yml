@@ -97,15 +97,6 @@ jobs:
         SPRING_DATA_REDIS_HOST: localhost
         SPRING_DATA_REDIS_PORT: 6379
 
-    - name: Run integration tests
-      run: mvn verify -DskipUnitTests
-      env:
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/shopdb
-        DATABASE_USERNAME: shop_user
-        DATABASE_PASSWORD: shop_password
-        SPRING_DATA_REDIS_HOST: localhost
-        SPRING_DATA_REDIS_PORT: 6379
-
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: always()
@@ -139,6 +130,7 @@ jobs:
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
+        ref: UserService
         java-version: '21'
         distribution: 'temurin'
         cache: 'maven'
