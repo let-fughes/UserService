@@ -1,32 +1,28 @@
 package com.kirylliuss.shop.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.kirylliuss.shop.config.AbstractIntegrationTest;
 import com.kirylliuss.shop.dto.request.UserRequest;
 import com.kirylliuss.shop.dto.respons.UserRespons;
 import com.kirylliuss.shop.exceptions.UserNotFoundException;
 import com.kirylliuss.shop.model.User;
 import com.kirylliuss.shop.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserServiceIntegrationTest extends AbstractIntegrationTest {
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private CacheManager cacheManager;
+    @Autowired private CacheManager cacheManager;
 
     private UserRequest userRequest;
 
@@ -147,7 +143,6 @@ class UserServiceIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void clearAllCaches() {
-        cacheManager.getCacheNames()
-                .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+        cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
     }
 }

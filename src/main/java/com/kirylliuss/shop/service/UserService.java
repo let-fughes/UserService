@@ -113,7 +113,6 @@ public class UserService {
         return userRespons;
     }
 
-    // Убрал кэширование для batch операции - оно проблематично
     @Transactional(readOnly = true)
     public List<UserRespons> getUsersByIdIn(List<Long> ids) throws UserNotFoundException {
         List<User> users = userRepository.findByIdIn(ids);

@@ -1,5 +1,10 @@
 package com.kirylliuss.shop.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+
 import com.kirylliuss.shop.dto.request.UserRequest;
 import com.kirylliuss.shop.dto.respons.UserRespons;
 import com.kirylliuss.shop.exceptions.UserNotFoundException;
@@ -7,6 +12,8 @@ import com.kirylliuss.shop.mapper.CardMapper;
 import com.kirylliuss.shop.mapper.UserMapper;
 import com.kirylliuss.shop.model.User;
 import com.kirylliuss.shop.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,29 +21,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class UserServiceUnitTest {
 
-    @Mock
-    private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @Mock
-    private UserMapper userMapper;
+    @Mock private UserMapper userMapper;
 
-    @Mock
-    private CardMapper cardMapper;
+    @Mock private CardMapper cardMapper;
 
-    @InjectMocks
-    private UserService userService;
+    @InjectMocks private UserService userService;
 
     private User user;
     private UserRequest userRequest;
