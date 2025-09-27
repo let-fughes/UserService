@@ -1,1 +1,0 @@
-org.springframework.boot.env.EnvironmentPostProcessor=com.kirylliuss.shop.config.DotenvEnvironmentPostProcessor
