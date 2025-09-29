@@ -13,7 +13,6 @@
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/dto/request/UserRequest.java
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/repository/UserRepository.java
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/exceptions/ValidationException.java
-/home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/env/DotenvInitializer.java
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/exceptions/CardNotFoundException.java
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/config/DotenvEnvironmentPostProcessor.java
 /home/kirylliuss/IdeaProjects/shop/src/main/java/com/kirylliuss/shop/model/User.java
