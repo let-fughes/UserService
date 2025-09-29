@@ -1,0 +1,115 @@
+name: UserService CI Pipeline
+
+on:
+  push:
+    branches: [ main, master, UserService ]
+  pull_request:
+    branches: [ main, master, UserService ]
+
+env:
+  IMAGE_NAME: user-service-app
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code from UserService branch
+      uses: actions/checkout@v4
+      with:
+        ref: UserService
+        fetch-depth: 0
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn -B clean compile
+
+    - name: Run tests
+      run: mvn -B test
+
+    - name: SonarCloud Analysis
+      run: |
+        mvn -B sonar:sonar \
+          -Dsonar.projectKey=let-fughes_UserService \
+          -Dsonar.organization=let-fughes \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Package application (skip Spring Boot repackage)
+      run: mvn -B package -DskipTests -Dspring-boot.repackage.skip=true
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: java-app
+        path: target/*.jar
+        retention-days: 1
+
+  build-docker-image:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout all branches
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: UserService
+
+    - name: Download JAR artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: java-app
+        path: target/
+
+    - name: Find Dockerfile in repository
+      run: |
+        echo "🔍 Searching for Dockerfile in repository..."
+        
+        # Ищем Dockerfile в любой ветке
+        if [ -f "Dockerfile" ]; then
+          echo "Dockerfile found in current branch"
+        else
+          echo "Trying to find Dockerfile in other branches..."
+          # Получаем список всех веток
+          git fetch --all
+          
+          # Пробуем найти Dockerfile в main ветке
+          if git show origin/main:Dockerfile > /dev/null 2>&1; then
+            echo "Dockerfile found in main branch, copying..."
+            git show origin/main:Dockerfile > Dockerfile
+          elif git show origin/master:Dockerfile > /dev/null 2>&1; then
+            echo "Dockerfile found in master branch, copying..."
+            git show origin/master:Dockerfile > Dockerfile
+          else
+            echo "Creating default Dockerfile..."
+            cat > Dockerfile << 'EOF'
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+EOF
+          fi
+        fi
+        
+        echo "Dockerfile content:"
+        cat Dockerfile
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      run: |
+        docker build -t user-service-app:latest .
+        echo "Docker image built successfully"
+        docker images user-service-app
