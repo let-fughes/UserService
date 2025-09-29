@@ -102,7 +102,7 @@ EOF
           fi
         fi
         
-        echo "📄 Dockerfile content:"
+        echo "Dockerfile content:"
         cat Dockerfile
 
     - name: Set up Docker Buildx
