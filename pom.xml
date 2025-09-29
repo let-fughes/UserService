@@ -31,6 +31,8 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <testcontainers.version>1.19.7</testcontainers.version>
+        <sonar.organization>InnowiseGroup</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
         <!-- Swagger -->
@@ -210,6 +212,13 @@
                         <importOrder/>
                     </java>
                 </configuration>
+            </plugin>
+
+            <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.10.0.2594</version>
+            
             </plugin>
             <plugin>
             <groupId>org.springframework.boot</groupId>
