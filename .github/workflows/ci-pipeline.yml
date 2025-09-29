@@ -76,5 +76,5 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t user-service-app:latest .
-        echo "✅ Docker image built successfully"
+        echo "Docker image built successfully"
         docker images user-service-app
