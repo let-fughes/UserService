@@ -62,7 +62,7 @@ jobs:
     - name: Checkout code from branch with Dockerfile
       uses: actions/checkout@v4
       with:
-        ref: UserService 
+        ref: UserService
 
     - name: Download JAR artifact
       uses: actions/download-artifact@v4
