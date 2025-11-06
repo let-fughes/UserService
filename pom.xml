@@ -35,6 +35,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencies>
+             
         <!-- Swagger -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
